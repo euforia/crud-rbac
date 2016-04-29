@@ -1,0 +1,10 @@
+{
+    "id": "admin",
+    "name": "Admin",
+    "policies": [
+        {
+            "op": "*",
+            "resource": "*"
+        }
+    ]
+}

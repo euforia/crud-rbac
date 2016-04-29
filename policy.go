@@ -10,7 +10,7 @@ type OpType string
 const (
 	OpCreate OpType = "create"
 	OpRead   OpType = "read"
-	OpUpdate OpType = "updated"
+	OpUpdate OpType = "update"
 	OpDelete OpType = "delete"
 	OpAll    OpType = "*"
 )
@@ -46,7 +46,7 @@ func ParseHttpRequestPolicy(r *http.Request, basePath string) (p Policy) {
 	switch r.Method {
 	case "GET":
 		p.Op = OpRead
-	case "PUT":
+	case "PUT", "PATCH":
 		p.Op = OpUpdate
 	case "POST":
 		p.Op = OpCreate
