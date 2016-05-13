@@ -4,7 +4,9 @@
     "policies": [
         {
             "op": "*",
-            "resource": "*"
+            "resource": "*",
+            "allow": true,
+            "constraints": {}
         }
     ]
 }

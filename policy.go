@@ -16,18 +16,22 @@ const (
 )
 
 type Policy struct {
-	Op       OpType `json:"op"`
-	Resource string `json:"resource"`
+	Op       OpType
+	Resource string
+
 	// Optional rules on data.  Each key is an 'AND'
 	// while a key with more than 1 element will be treated as an 'OR'
 	// on the same key.
-	Constraints map[string][]string `json:"constraints"`
+	Constraints map[string]interface{}
 
-	Allow bool `json:"allow"`
+	Allow bool
 }
 
+// Match on Op and resource widlcard
 // Return the matched policy
 func (p *Policy) Match(policy Policy) *Policy {
+	// Exact or all op
+	// *resource, resource*, *resource*
 	if (p.Op == policy.Op || p.Op == OpAll) &&
 		(p.Resource == policy.Resource || p.Resource == "*" ||
 			(p.Resource[0] == '*' && strings.HasSuffix(policy.Resource, p.Resource[1:])) ||
