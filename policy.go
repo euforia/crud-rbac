@@ -16,6 +16,7 @@ const (
 )
 
 type Policy struct {
+	Id       string
 	Op       OpType
 	Resource string
 
@@ -50,9 +51,9 @@ func ParseHttpRequestPolicy(r *http.Request, basePath string) (p Policy) {
 	switch r.Method {
 	case "GET":
 		p.Op = OpRead
-	case "PUT", "PATCH":
+	case "PATCH":
 		p.Op = OpUpdate
-	case "POST":
+	case "POST", "PUT":
 		p.Op = OpCreate
 	case "DELETE":
 		p.Op = OpDelete

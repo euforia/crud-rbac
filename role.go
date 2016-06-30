@@ -1,6 +1,7 @@
 package crudrbac
 
 import (
+	//"fmt"
 	"time"
 )
 
@@ -41,11 +42,32 @@ func (r *Role) Reset() {
 	r.Version = 1
 }
 
-func (r *Role) Update(role Role) {
+func (r *Role) AddPolicy(policy Policy) bool {
+	if policy.Id == "" {
 
-	r.Name = role.Name
-	r.Policies = role.Policies
+	}
+
+	for _, p := range r.Policies {
+		if p.Id == policy.Id {
+			return false
+		}
+	}
+
+	r.Policies = append(r.Policies, policy)
+	//fmt.Println(r.Policies)
+	return true
+}
+
+func (r *Role) Update(role Role) {
+	//t := *r
+	if role.Name != "" {
+		r.Name = role.Name
+	}
+
+	for _, p := range role.Policies {
+		r.AddPolicy(p)
+	}
+
 	r.Version += 1
 	r.UpdatedDate = time.Now().UnixNano()
-
 }
